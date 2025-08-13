@@ -1,1 +1,27 @@
-/* You can add global styles to this file, and also import other style files */
+@import "tailwindcss";
+
+@import "tailwindcss";
+
+/* design tokens básicos */
+@layer components {
+  .btn       { @apply inline-flex items-center gap-2 rounded-lg px-4 py-2 font-medium bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-60; }
+  .input     { @apply w-full rounded-lg border border-gray-300 px-3 py-2 focus:outline-none focus:ring-2; }
+  .card      { @apply rounded-2xl border border-gray-200 bg-white shadow-sm; }
+}
+
+/* Colores “navy” usados por el diseño */
+@layer utilities {
+  .text-navy-900 { color: #0f172a; }
+  .text-navy-800 { color: #1e293b; }
+  .text-navy-600 { color: #475569; }
+  .bg-navy-900   { background-color: #0f172a; }
+  .bg-navy-800   { background-color: #1e293b; }
+  .border-navy-500 { border-color: #64748b; }
+  .focus\:border-navy-500:focus { border-color: #64748b; }
+  .focus\:ring-navy-500:focus { --tw-ring-color: #64748b; }
+  .hover\:bg-navy-800:hover { background-color: #1e293b; }
+  .hover\:text-navy-800:hover { color: #1e293b; }
+}
+
+html, body { height: 100%; }
+body { @apply bg-gray-50 text-gray-800; }
