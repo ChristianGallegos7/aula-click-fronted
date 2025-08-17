@@ -7,6 +7,7 @@ import { TokenService } from '../core/token.service';
 export interface LoginResponse {
   token: string;
   expiresAtUtc: string;
+  roles: string[];
 }
 
 export interface MeResponse {
@@ -19,6 +20,18 @@ export interface MeResponse {
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
+  /** Guarda el rol principal del usuario en localStorage */
+  set mainRole(role: string | null) {
+    if (role) localStorage.setItem('main_role', role);
+    else localStorage.removeItem('main_role');
+  }
+  get mainRole(): string | null {
+    return localStorage.getItem('main_role');
+  }
+  /** Devuelve el payload decodificado del JWT actual */
+  get tokenPayload(): any | null {
+    return this.token.payload;
+  }
   private base = `${environment.apiBase}/auth`;
 
   // Estado en memoria del perfil
@@ -27,12 +40,10 @@ export class AuthService {
 
   constructor(private http: HttpClient, private token: TokenService) {}
 
-  /** Inicia sesión contra /api/auth/login, guarda el JWT y carga el perfil */
-  login(email: string, password: string): Observable<void> {
+  /** Inicia sesión contra /api/auth/login, guarda el JWT y retorna los roles para redirección inmediata */
+  login(email: string, password: string): Observable<LoginResponse> {
     return this.http.post<LoginResponse>(`${this.base}/login`, { email, password }).pipe(
-      tap(res => this.token.token = res.token),
-      switchMap(() => this.me()),
-      map(() => void 0)
+      tap(res => this.token.token = res.token)
     );
   }
 

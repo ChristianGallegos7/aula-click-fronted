@@ -1,0 +1,130 @@
+<div class="layout">
+	<app-sidebar></app-sidebar>
+	<div class="main-content">
+		<h2>Administración de Usuarios</h2>
+		<button class="btn add" (click)="openAddUserModal()">Agregar usuario</button>
+		<!-- Modal para agregar usuario -->
+		<div class="modal-backdrop" *ngIf="addingUser">
+			<div class="modal">
+				<h3>Agregar Usuario</h3>
+				<form (ngSubmit)="saveAddUser()" #addForm="ngForm">
+					<div class="modal-columns" *ngIf="getSelectedRoleName() === 'Student'; else singleColumn">
+						<div class="modal-col">
+							<h4>Datos del Estudiante</h4>
+							<label>Nombre:</label>
+							<input type="text" [(ngModel)]="newUser.Nombre" name="addNombre" required />
+							<label>Apellido:</label>
+							<input type="text" [(ngModel)]="newUser.Apellido" name="addApellido" required />
+							<label>Email:</label>
+							<input type="email" [(ngModel)]="newUser.Email" name="addEmail" required />
+							<label>Teléfono:</label>
+							<label>Activo:</label>
+							<input type="checkbox" [(ngModel)]="newUser.Activo" name="addActivo" />
+							<label>Rol:</label>
+							<input type="text" [(ngModel)]="newUser.Rol" name="addRol" required />
+						</div>
+						<div class="modal-col">
+							<h4>Datos del Tutor Legal</h4>
+							<label>Nombre Tutor:</label>
+							<input type="text" [(ngModel)]="guardian.firstName" name="guardianFirstName" required />
+							<label>Apellido Tutor:</label>
+							<input type="text" [(ngModel)]="guardian.lastName" name="guardianLastName" required />
+							<label>Email Tutor:</label>
+							<input type="email" [(ngModel)]="guardian.email" name="guardianEmail" required />
+							<label>Teléfono Tutor:</label>
+							<input type="text" [(ngModel)]="guardian.phoneNumber" name="guardianPhoneNumber" />
+						</div>
+					</div>
+					<ng-template #singleColumn>
+						<label>Nombre:</label>
+						<input type="text" [(ngModel)]="newUser.firstName" name="addFirstName" required />
+						<label>Apellido:</label>
+						<input type="text" [(ngModel)]="newUser.lastName" name="addLastName" required />
+						<label>Email:</label>
+						<input type="email" [(ngModel)]="newUser.email" name="addEmail" required />
+						<label>Teléfono:</label>
+						<input type="text" [(ngModel)]="newUser.phoneNumber" name="addPhoneNumber" />
+						<label>Activo:</label>
+						<input type="checkbox" [(ngModel)]="newUser.isActive" name="addIsActive" />
+						<label>Rol:</label>
+						<div *ngIf="rolesLoading">Cargando roles...</div>
+						<div *ngIf="!rolesLoading && roles.length">
+							<div *ngFor="let role of roles">
+								<label style="font-weight:400">
+									<input type="radio" name="addRole" [value]="role.roleId"
+										[(ngModel)]="selectedRoleId" required />
+									{{ role.name }}
+								</label>
+							</div>
+						</div>
+					</ng-template>
+					<div class="modal-actions">
+						<button type="submit" [disabled]="addLoading">Guardar</button>
+						<button type="button" (click)="cancelAddUser()">Cancelar</button>
+					</div>
+					<div *ngIf="addError" class="error">{{ addError }}</div>
+				</form>
+			</div>
+		</div>
+
+		<div *ngIf="loading" class="loader">Cargando usuarios...</div>
+		<div *ngIf="error" class="error">{{ error }}</div>
+
+		<div class="usuarios-card" *ngIf="!loading && users.length">
+			<table class="user-table">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Apellido</th>
+						<th>Email</th>
+						<th>Rol(es)</th>
+						<th>Activo</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let user of users">
+						<td>{{ user.nombre }} </td>
+						<td> {{user.apellido}} </td>
+						<td>{{ user.email }}</td>
+						<td>{{ user.rol }}</td>
+						<td>
+							<span [class.active]="user.activo" [class.inactive]="!user.activo">
+								{{ user.activo ? 'Sí' : 'No' }}
+							</span>
+						</td>
+						<td>
+							<button class="btn edit" (click)="editUser(user)">Editar</button>
+							<button class="btn delete" (click)="deleteUser(user)">Eliminar</button>
+						</td>
+					</tr>
+					<!-- Modal de edición de usuario fuera del *ngFor -->
+					<div class="modal-backdrop" *ngIf="editingUser">
+						<div class="modal">
+							<h3>Editar Usuario</h3>
+							<form (ngSubmit)="saveEdit()" #editForm="ngForm">
+								<label>Nombre:</label>
+								<input type="text" [(ngModel)]="editingUser.nombre" name="editNombre" required />
+								<label>Apellido:</label>
+								<input type="text" [(ngModel)]="editingUser.apellido" name="editApellido" required />
+								<label>Email:</label>
+								<input type="email" [(ngModel)]="editingUser.email" name="editEmail" required />
+								<label>Rol:</label>
+								<input type="text" [(ngModel)]="editingUser.rol" name="editRol" required />
+								<label>Activo:</label>
+								<input type="checkbox" [(ngModel)]="editingUser.activo" name="editActivo" />
+								<div class="modal-actions">
+									<button type="submit" [disabled]="editLoading">Guardar</button>
+									<button type="button" (click)="cancelEdit()">Cancelar</button>
+								</div>
+								<div *ngIf="editError" class="error">{{ editError }}</div>
+							</form>
+						</div>
+					</div>
+				</tbody>
+			</table>
+		</div>
+
+		<div *ngIf="!loading && !users.length" class="no-users">No hay usuarios registrados.</div>
+	</div>
+</div>
