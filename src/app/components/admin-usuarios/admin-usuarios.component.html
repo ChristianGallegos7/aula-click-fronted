@@ -8,7 +8,7 @@
 			<div class="modal">
 				<h3>Agregar Usuario</h3>
 				<form (ngSubmit)="saveAddUser()" #addForm="ngForm">
-					<div class="modal-columns" *ngIf="getSelectedRoleName() === 'Student'; else singleColumn">
+					<div class="modal-columns" *ngIf="getSelectedRoleName() === 'Estudiante'; else singleColumn">
 						<div class="modal-col">
 							<h4>Datos del Estudiante</h4>
 							<label>Nombre:</label>
@@ -17,22 +17,32 @@
 							<input type="text" [(ngModel)]="newUser.Apellido" name="addApellido" required />
 							<label>Email:</label>
 							<input type="email" [(ngModel)]="newUser.Email" name="addEmail" required />
-							<label>Teléfono:</label>
 							<label>Activo:</label>
 							<input type="checkbox" [(ngModel)]="newUser.Activo" name="addActivo" />
 							<label>Rol:</label>
 							<input type="text" [(ngModel)]="newUser.Rol" name="addRol" required />
+							<label>Cursos:</label>
+							<select multiple [(ngModel)]="cursosSeleccionados" name="cursosSeleccionados" required>
+								<option *ngFor="let curso of cursos" [value]="curso.id">{{ curso.nombre }}</option>
+							</select>
+							<div *ngIf="cursosLoading">Cargando cursos...</div>
 						</div>
 						<div class="modal-col">
-							<h4>Datos del Tutor Legal</h4>
-							<label>Nombre Tutor:</label>
-							<input type="text" [(ngModel)]="guardian.firstName" name="guardianFirstName" required />
-							<label>Apellido Tutor:</label>
-							<input type="text" [(ngModel)]="guardian.lastName" name="guardianLastName" required />
-							<label>Email Tutor:</label>
-							<input type="email" [(ngModel)]="guardian.email" name="guardianEmail" required />
-							<label>Teléfono Tutor:</label>
-							<input type="text" [(ngModel)]="guardian.phoneNumber" name="guardianPhoneNumber" />
+							<h4>Seleccionar o crear Tutor Legal</h4>
+							<label>Tutor existente:</label>
+							<select [(ngModel)]="representanteSeleccionado" name="tutorExistente" [disabled]="crearNuevoTutor">
+								<option value="">-- Selecciona un tutor --</option>
+								<option *ngFor="let rep of representantes" [value]="rep.id">{{ rep.nombre }} {{ rep.apellido }} ({{ rep.email }})</option>
+							</select>
+							<button type="button" (click)="crearNuevoTutor = !crearNuevoTutor">{{ crearNuevoTutor ? 'Cancelar nuevo tutor' : 'Crear nuevo tutor' }}</button>
+							<div *ngIf="crearNuevoTutor">
+								<label>Nombre Tutor:</label>
+								<input type="text" [(ngModel)]="guardian.nombre" name="guardianNombre" required />
+								<label>Apellido Tutor:</label>
+								<input type="text" [(ngModel)]="guardian.apellido" name="guardianApellido" required />
+								<label>Email Tutor:</label>
+								<input type="email" [(ngModel)]="guardian.email" name="guardianEmail" required />
+							</div>
 						</div>
 					</div>
 					<ng-template #singleColumn>
