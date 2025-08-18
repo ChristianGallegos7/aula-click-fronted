@@ -1,4 +1,3 @@
-
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -35,14 +34,14 @@ export class AdminUsuariosComponent implements OnInit {
     this.editError = '';
     // Enviar solo los campos requeridos por el DTO UserEditDto
     const userToSend = {
-      Id: this.editingUser.Id,
-      Nombre: this.editingUser.nombre,
-      Apellido: this.editingUser.apellido,
-      Email: this.editingUser.email,
-      Rol: this.editingUser.rol, // O ajusta si roles es string o array
-      Activo: this.editingUser.activo
+      id: this.editingUser.id,
+      nombre: this.editingUser.nombre,
+      apellido: this.editingUser.apellido,
+      email: this.editingUser.email,
+      rol: this.editingUser.rol,
+      activo: this.editingUser.activo
     };
-    this.usersService.update(this.editingUser.Id, userToSend).subscribe({
+    this.usersService.update(userToSend.id, userToSend).subscribe({
       next: updated => {
         this.editLoading = false;
         this.editingUser = null;
@@ -66,7 +65,6 @@ export class AdminUsuariosComponent implements OnInit {
   guardian: any = { firstName: '', lastName: '', email: '', phoneNumber: '' };
   roles: Role[] = [];
   rolesLoading = false;
-  selectedRoleId: string | null = null;
 
   constructor(private usersService: UsersService, private rolesService: RolesService) {}
   openAddUserModal() {
@@ -74,7 +72,7 @@ export class AdminUsuariosComponent implements OnInit {
     this.addError = '';
   this.newUser = { Nombre: '', Apellido: '', Email: '', Rol: '', Activo: true };
     this.guardian = { firstName: '', lastName: '', email: '', phoneNumber: '' };
-    this.selectedRoleId = null;
+  this.newUser.Rol = '';
     this.loadRoles();
   }
 
@@ -87,7 +85,9 @@ export class AdminUsuariosComponent implements OnInit {
     this.rolesLoading = true;
     this.rolesService.getAll().subscribe({
       next: roles => {
+        
         this.roles = roles;
+        console.log(this.roles);
         this.rolesLoading = false;
       },
       error: () => {
@@ -125,14 +125,10 @@ export class AdminUsuariosComponent implements OnInit {
   }
 
   getSelectedRoleName(): string {
-    const role = this.roles.find(r => r.roleId === this.selectedRoleId);
-    return role ? role.name : '';
+    return this.newUser.Rol || '';
   }
 
-  getGuardianRoleId(): string | null {
-    const guardianRole = this.roles.find(r => r.name === 'Guardian');
-    return guardianRole ? guardianRole.roleId : null;
-  }
+
 
   ngOnInit() {
     this.fetchUsers();
@@ -156,7 +152,7 @@ export class AdminUsuariosComponent implements OnInit {
 
   deleteUser(user: User) {
     if (!confirm(`¿Eliminar usuario ${user.nombre || user.email}?`)) return;
-    this.usersService.delete(user.Id).subscribe({
+  this.usersService.delete(user.id).subscribe({
       next: () => this.fetchUsers(),
       error: () => alert('No se pudo eliminar el usuario')
     });

@@ -37,23 +37,21 @@
 					</div>
 					<ng-template #singleColumn>
 						<label>Nombre:</label>
-						<input type="text" [(ngModel)]="newUser.firstName" name="addFirstName" required />
+						<input type="text" [(ngModel)]="newUser.Nombre" name="addNombre" required />
 						<label>Apellido:</label>
-						<input type="text" [(ngModel)]="newUser.lastName" name="addLastName" required />
+						<input type="text" [(ngModel)]="newUser.Apellido" name="addApellido" required />
 						<label>Email:</label>
-						<input type="email" [(ngModel)]="newUser.email" name="addEmail" required />
-						<label>Teléfono:</label>
-						<input type="text" [(ngModel)]="newUser.phoneNumber" name="addPhoneNumber" />
+						<input type="email" [(ngModel)]="newUser.Email" name="addEmail" required />
 						<label>Activo:</label>
-						<input type="checkbox" [(ngModel)]="newUser.isActive" name="addIsActive" />
+						<input type="checkbox" [(ngModel)]="newUser.Activo" name="addActivo" />
 						<label>Rol:</label>
 						<div *ngIf="rolesLoading">Cargando roles...</div>
 						<div *ngIf="!rolesLoading && roles.length">
 							<div *ngFor="let role of roles">
 								<label style="font-weight:400">
-									<input type="radio" name="addRole" [value]="role.roleId"
-										[(ngModel)]="selectedRoleId" required />
-									{{ role.name }}
+									<input type="radio" name="addRole" [value]="role.nombre" [(ngModel)]="newUser.Rol"
+										required />
+									{{ role.nombre }}
 								</label>
 							</div>
 						</div>

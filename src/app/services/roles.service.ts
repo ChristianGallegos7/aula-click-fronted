@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 
 export interface Role {
   roleId: string;
-  name: string;
+  nombre: string;
 }
 
 @Injectable({ providedIn: 'root' })

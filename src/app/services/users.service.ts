@@ -4,15 +4,12 @@ import { environment } from '../../environments/environment';
 import { Observable } from 'rxjs';
 
 export interface User {
-  Id: string;
-  institutionId?: string;
-  email: string;
+  id: string;
   nombre: string;
   apellido: string;
-  phoneNumber?: string;
-  activo: boolean;
-  displayName?: string;
+  email: string;
   rol: string;
+  activo: boolean;
 }
 
 @Injectable({ providedIn: 'root' })
