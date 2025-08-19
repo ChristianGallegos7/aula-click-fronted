@@ -1,8 +1,49 @@
 <div class="layout">
 	<app-sidebar></app-sidebar>
 	<div class="main-content">
-		<h2>Cursos</h2>
-		<p>Aquí puedes gestionar cursos y materias.</p>
-		<!-- Aquí va el contenido de cursos -->
+		<h2>Materias</h2>
+		<button class="btn add" (click)="startAdd()">Agregar materia</button>
+		<div *ngIf="adding || editing" class="modal-backdrop">
+			<div class="modal">
+				<h3>{{ editing ? 'Editar' : 'Agregar' }} Materia</h3>
+				<form (ngSubmit)="save()">
+					<label>Nombre:</label>
+					<input type="text" [(ngModel)]="form.nombre" name="nombre" required autofocus />
+					<label>Profesor:</label>
+					<select [(ngModel)]="form.profesorId" name="profesorId" required>
+						<option *ngFor="let prof of profesores" [value]="prof.id">{{ prof.nombre }} {{ prof.apellido }}
+						</option>
+					</select>
+					<div class="modal-actions">
+						<button type="submit">Guardar</button>
+						<button type="button" (click)="cancel()">Cancelar</button>
+					</div>
+					<div *ngIf="error" class="error">{{ error }}</div>
+				</form>
+			</div>
+		</div>
+		<div *ngIf="loading">Cargando materias...</div>
+		<div *ngIf="!loading && cursos.length">
+			<table class="user-table">
+				<thead>
+					<tr>
+						<th>Nombre</th>
+						<th>Profesor</th>
+						<th>Acciones</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr *ngFor="let curso of cursos">
+						<td>{{ curso.nombre }}</td>
+						<td>{{ getProfesorNombre(curso.profesorId) }}</td>
+						<td>
+							<button class="btn edit" (click)="startEdit(curso)">Editar</button>
+							<button class="btn delete" (click)="delete(curso)">Eliminar</button>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+		<div *ngIf="!loading && !cursos.length" class="no-users">No hay materias registradas.</div>
 	</div>
 </div>

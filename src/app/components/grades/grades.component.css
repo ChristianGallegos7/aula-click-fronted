@@ -1,0 +1,255 @@
+/* Layout principal con sidebar y contenido alineados */
+.layout {
+	display: flex;
+	min-height: 100vh;
+}
+
+app-sidebar {
+	flex: 0 0 220px;
+	height: 100vh;
+	background: #222;
+	color: #fff;
+}
+
+
+.main-content {
+	flex: 1;
+	padding: 32px 24px;
+	background: #f7f7f7;
+	min-height: 100vh;
+	box-sizing: border-box;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+}
+
+h2 {
+	margin-top: 0;
+	margin-bottom: 18px;
+	font-size: 1.5rem;
+	font-weight: 600;
+}
+
+.btn.add {
+	margin-bottom: 18px;
+	font-size: 1rem;
+	padding: 10px 22px;
+}
+
+.user-table {
+	width: 100%;
+	border-collapse: separate;
+	border-spacing: 0;
+	background: #fff;
+	box-shadow: 0 2px 8px #0001;
+	border-radius: 10px;
+	overflow: hidden;
+	margin-top: 10px;
+}
+.user-table th, .user-table td {
+	padding: 14px 18px;
+	border-bottom: 1px solid #eee;
+	text-align: left;
+}
+.user-table th {
+	background: #f0f0f0;
+	font-weight: 600;
+	font-size: 1.05rem;
+	color: #222;
+}
+.user-table tr:last-child td {
+	border-bottom: none;
+}
+.user-table tr {
+	transition: background 0.2s;
+}
+.user-table tr:hover {
+	background: #f5faff;
+}
+
+.btn {
+	padding: 8px 18px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 6px;
+	font-size: 1rem;
+	font-weight: 500;
+	transition: background 0.2s;
+}
+.btn.edit { background: #1976d2; color: #fff; }
+.btn.edit:hover { background: #1251a3; }
+.btn.delete { background: #d32f2f; color: #fff; }
+.btn.delete:hover { background: #a31515; }
+.btn.add { background: #388e3c; color: #fff; }
+.btn.add:hover { background: #256b28; }
+
+.modal-backdrop {
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: #0007;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+.modal {
+	background: #fff;
+	padding: 36px 32px 28px 32px;
+	border-radius: 14px;
+	min-width: 340px;
+	max-width: 95vw;
+	box-shadow: 0 8px 32px #0003, 0 1.5px 8px #1976d233;
+	display: flex;
+	flex-direction: column;
+	align-items: stretch;
+	position: relative;
+}
+
+.modal h3 {
+	margin-top: 0;
+	margin-bottom: 18px;
+	font-size: 1.25rem;
+	font-weight: 600;
+	color: #1976d2;
+	text-align: center;
+}
+
+.modal label {
+	margin-top: 10px;
+	margin-bottom: 4px;
+	font-weight: 500;
+	color: #333;
+	display: block;
+}
+.modal input[type="text"],
+.modal select {
+	width: 100%;
+	padding: 8px 10px;
+	border: 1px solid #cfd8dc;
+	border-radius: 5px;
+	font-size: 1rem;
+	margin-bottom: 10px;
+	background: #f9f9f9;
+	transition: border 0.2s;
+}
+.modal input[type="text"]:focus,
+.modal select:focus {
+	border: 1.5px solid #1976d2;
+	outline: none;
+	background: #fff;
+}
+.modal-actions {
+	margin-top: 18px;
+	display: flex;
+	gap: 10px;
+	justify-content: flex-end;
+}
+.modal button {
+	font-size: 1rem;
+	padding: 8px 18px;
+	border-radius: 4px;
+	border: none;
+	cursor: pointer;
+	font-weight: 500;
+	transition: background 0.2s;
+}
+.modal button[type="submit"] {
+	background: #1976d2;
+	color: #fff;
+}
+.modal button[type="submit"]:hover {
+	background: #1251a3;
+}
+.modal button[type="button"] {
+	background: #e0e0e0;
+	color: #333;
+}
+.modal button[type="button"]:hover {
+	background: #bdbdbd;
+}
+.modal .error {
+	color: #d32f2f;
+	margin-top: 10px;
+	text-align: center;
+}
+.modal-actions {
+	margin-top: 18px;
+	display: flex;
+	gap: 10px;
+}
+.error {
+	color: #d32f2f;
+	margin-top: 10px;
+}
+.no-users {
+	margin-top: 24px;
+	color: #888;
+}
+
+h2 {
+	margin-top: 0;
+}
+
+.btn.add {
+	margin-bottom: 18px;
+}
+
+.user-table {
+	width: 100%;
+	border-collapse: collapse;
+	background: #fff;
+	box-shadow: 0 2px 8px #0001;
+}
+.user-table th, .user-table td {
+	padding: 10px 12px;
+	border-bottom: 1px solid #eee;
+}
+.user-table th {
+	background: #f0f0f0;
+	font-weight: 600;
+}
+.user-table tr:last-child td {
+	border-bottom: none;
+}
+
+.btn {
+	padding: 6px 14px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+	margin-right: 6px;
+}
+.btn.edit { background: #1976d2; color: #fff; }
+.btn.delete { background: #d32f2f; color: #fff; }
+.btn.add { background: #388e3c; color: #fff; }
+
+.modal-backdrop {
+	position: fixed;
+	top: 0; left: 0; right: 0; bottom: 0;
+	background: #0007;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	z-index: 1000;
+}
+.modal {
+	background: #fff;
+	padding: 32px 28px;
+	border-radius: 8px;
+	min-width: 320px;
+	box-shadow: 0 4px 24px #0002;
+}
+.modal-actions {
+	margin-top: 18px;
+	display: flex;
+	gap: 10px;
+}
+.error {
+	color: #d32f2f;
+	margin-top: 10px;
+}
+.no-users {
+	margin-top: 24px;
+	color: #888;
+}

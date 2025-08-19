@@ -10,7 +10,7 @@ import { RouterModule } from '@angular/router';
         <a routerLink="/admin/inicio" routerLinkActive="active">Inicio</a>
         <a routerLink="/admin/usuarios" routerLinkActive="active">Usuarios</a>
         <a routerLink="/admin/cursos" routerLinkActive="active">Cursos</a>
-        <a routerLink="/reportes" routerLinkActive="active">Reportes</a>
+        <a routerLink="/admin/reportes" routerLinkActive="active">Reportes</a>
         <a (click)="logout()" class="logout">Cerrar sesión</a>
       </nav>
     </aside>
